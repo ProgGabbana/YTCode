@@ -1,2 +1,6 @@
 ##  executable files 
 *.exe
+
+## object files
+*.txt
+*.ppm
