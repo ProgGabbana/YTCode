@@ -1,23 +1,26 @@
-//FileCompressor.c is a YT Tutorial from https://www.youtube.com/watch?v=bPN4OX_zZCg
+// Rle.c is a YT Tutorial from https://www.youtube.com/watch?v=bPN4OX_zZCg
 
-/*In this tutorial, we will program a run-length encoding (RLE) compressor in C. 
- *RLE is a simple form of data compression where sequences of the same data value 
- *are stored as a single data value and count.
- *Notes to self (NTS): Learn more about this things */
+/* In this tutorial, we will program a run-length encoding (RLE) compressor in C. 
+ * RLE is a simple form of data compression where sequences of the same data value 
+ * are stored as a single data value and count.
+ * Notes to self (NTS): Learn more about this things */
 
-/*To build the file compressor, we will use the following command in the terminal:
- * Get-Content example.txt | ./FileCompressor mode (vscode terminal)
- * ./FileCompressor compress < example.txt (CMD terminal)
+/* To build the file compressor, we will use the following command in the terminal:
+ * Rle.exe compress < example.txt (CMD terminal)
+ * Rle.exe compress < image.ppm
  * where mode is either "compress" or "decompress" 
- * remember to compile with: gcc -o FileCompressor FileCompressor.c */
+ * remember to compile with: gcc -o Rle Rle.c 
+ * if you want an output file from terminal, redirect the output: 
+ * Rle.exe compress < image.ppm > image.rle 
+ * Rle.exe decompress < image.rle > image_restored.ppm */
 
-/*The files we are going to compress are created using the following commands in the terminal:
- *"AAAAABBBBBCCCCCDDDDEEEEEEEEEEE" | Out-File -FilePath example.txt -Encoding ascii 
- *"P3
-3 2
-255
-255 0 0  255 0 0  255 0 0
-0 255 0  0 255 0  0 255 0" | Out-File -FilePath image.ppm -Encoding ascii
+/* The files we are going to compress are created using the following commands in the terminal:
+ * echo AAAAABBBBBCCCCCDDDDEEEEEEEEEEE > example.txt 
+ * echo P3 > image.ppm
+ * echo 3 2 >> image.ppm
+ * echo 255 >> image.ppm
+ * echo 255 0 0  255 0 0  255 0 0 >> image.ppm
+ * echo 0 255 0  0 255 0  0 255 0 >> image.ppm
  */
 
 /* * NOTE ON VISUALIZATION:
@@ -38,7 +41,20 @@
 
 void decompress()
 {
-    printf("Entering decompress\n");
+    while (1)
+    {
+        int c = getchar();
+        if (c == EOF)
+            break;
+        int count = getchar();
+        if (count == EOF)
+            break;
+        
+        for (int i = 0; i < count; i++)
+        {
+            putchar(c);
+        }
+    }
 }
 
 void compress()
@@ -56,21 +72,19 @@ void compress()
             {
                 putchar(seen);
                 putchar(255);
-                repetitions = 0;
+                repetitions = 1;
             }
         }
         else
         {
             putchar(seen);
-            //(repetitions);
-            printf("%d", repetitions); //This will print the count as a string, not as a byte.
+            putchar(repetitions);
             repetitions = 1;
             seen = next;    
         }
     }
     putchar(seen);
-    //putchar(repetitions);
-    printf("%d", repetitions); //This will print the count as a string, not as a byte.
+    putchar(repetitions);
 }
 
 int main(int argc, char *argv[])
