@@ -4,4 +4,4 @@ This project is based on the [Kings and Pigs](https://github.com/chriscourses/ki
 
 This file serves as a space for personal notes and documentation regarding the program's development.
 
-For this project we're coging to use Tiled, that you can download from [here](https://www.mapeditor.org/)
+For this project we're going to use Tiled, that you can download from [here](https://www.mapeditor.org/)
